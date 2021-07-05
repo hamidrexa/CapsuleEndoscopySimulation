@@ -153,7 +153,7 @@ Transform:
   - {fileID: 556189326}
   - {fileID: 2108575251}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1001 &85473786
 PrefabInstance:
@@ -588,7 +588,7 @@ Transform:
   - {fileID: 471616278}
   - {fileID: 1128716395}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!1001 &470287134
 PrefabInstance:
@@ -1389,7 +1389,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1149497781}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 4
   m_Drag: 0
   m_AngularDrag: 1
   m_UseGravity: 1
@@ -1464,14 +1464,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1149497781}
-  m_LocalRotation: {x: 0, y: 0.88171554, z: -0, w: -0.4717815}
-  m_LocalPosition: {x: -0.13, y: 0.1, z: -0.16}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalRotation: {x: -0, y: 0.88171554, z: -0, w: -0.4717815}
+  m_LocalPosition: {x: -0.45, y: 0.1, z: 0.66}
+  m_LocalScale: {x: 0.20000003, y: 0.2, z: 0.20000003}
   m_Children:
   - {fileID: 998412479}
   - {fileID: 270723579}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 236.3, z: 0}
 --- !u!1001 &1171918773
 PrefabInstance:
@@ -1727,8 +1727,6 @@ GameObject:
   - component: {fileID: 1366318931}
   - component: {fileID: 1366318936}
   - component: {fileID: 1366318935}
-  - component: {fileID: 1366318934}
-  - component: {fileID: 1366318933}
   m_Layer: 0
   m_Name: ml
   m_TagString: Untagged
@@ -1749,12 +1747,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 3
     NumStackedVectorObservations: 1
-    VectorActionSize: 0100000001000000
+    VectorActionSize: 03000000030000000300000003000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 6e0147c3b4b69c648a1f2a9ca6cb4b00, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: BallMagnetsTutorial
@@ -1772,55 +1770,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1366318933
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366318930}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1366318934
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1366318930}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 6693f6168d36b466faad3c80ff978952, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
 --- !u!114 &1366318935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1850,11 +1801,13 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 0
+  MaxStep: 5000
+  electromagneticFieldController: {fileID: 2009659006}
   SolenoidField1: {fileID: 1488214437}
   SolenoidField2: {fileID: 355941836}
   SolenoidField3: {fileID: 1368325225}
   SolenoidField4: {fileID: 1448417413}
+  ball: {fileID: 1149497781}
 --- !u!1 &1368325225 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: de99452d220764f7b8af434af3660eb5,
@@ -1893,7 +1846,7 @@ Transform:
   - {fileID: 2030031314}
   - {fileID: 2010149653}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!1 &1418971436
 GameObject:
@@ -2751,7 +2704,7 @@ Transform:
   - {fileID: 85473787}
   - {fileID: 1120311549}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!1001 &1841761920
 PrefabInstance:
@@ -3012,6 +2965,12 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &2009659006 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 04284aa5e6ec8408f90c03944fbe1eee,
+    type: 3}
+  m_PrefabInstance: {fileID: 2076683717}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2010149652
 PrefabInstance:
   m_ObjectHideFlags: 0
