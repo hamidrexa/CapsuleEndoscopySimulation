@@ -17,53 +17,53 @@
 in line 5:
 "com.unity.ml-agents": "file:../../com.unity.ml-agents",
 
-6.1. use com.unity.ml-agents_1.1.0  for com.unity.ml-agents
-[download ML Agent from here](https://github.com/Unity-Technologies/ml-agents/tree/com.unity.ml-agents_1.1.0)
-6.2 chack the version form Assets tab -> View in Package Manager -> ML Agents
-![Package Manager](docs/package-manager-ml-agent.jpg)
+    6.1. use com.unity.ml-agents_1.1.0  for com.unity.ml-agents
+    [download ML Agent from here](https://github.com/Unity-Technologies/ml-agents/tree/com.unity.ml-agents_1.1.0)
+    6.2 chack the version form Assets tab -> View in Package Manager -> ML Agents
+
+    ![Package Manager](docs/package-manager-ml-agent.jpg)
 
 7. install anaconda with python
-```{r, engine='bash', count_lines}
-	conda create --name py37 python=3.7 anaconda 
-```
+    ```{r, engine='bash', count_lines}
+    	conda create --name py37 python=3.7 anaconda 
+    ```
 
 8. install pytorch
-```{r, engine='bash', count_lines}
-pip3 install torch==1.7.1+cpu -f [https://download.pytorch.org/whl/torch_stable.html]
-```
+    ```{r, engine='bash', count_lines}
+        pip3 install torch==1.7.1+cpu -f [https://download.pytorch.org/whl/torch_stable.html]
+    ```
 
 9. install mlagents
-```{r, engine='bash', count_lines}
-python -m pip install mlagents==0.26.0
-```
-from [this repository](https://github.com/Unity-Technologies/ml-agents/tree/main/ml-agents)
-(in failure case: pip install versioned-hdf5)
+    ```{r, engine='bash', count_lines}
+        python -m pip install mlagents==0.26.0
+    ```
+    use [this repository](https://github.com/Unity-Technologies/ml-agents/tree/main/ml-agents)
+    (in failure case: pip install versioned-hdf5)
 
 10. install vscode
-Learn more: {How To Make Intellisense Work In VSCode With Unity?}[https://www.youtube.com/watch?v=btga03_gGfw]
+Learn more: [How To Make Intellisense Work In VSCode With Unity?](https://www.youtube.com/watch?v=btga03_gGfw)
 
 11. versioning:
-[more info](https://www.youtube.com/playlist?list=PL8fePt58xRPY1-pkhMPus3GlUGXNdqMH5]
+[more info](https://www.youtube.com/playlist?list=PL8fePt58xRPY1-pkhMPus3GlUGXNdqMH5)
 
-version:
-1. python env:
-```{r, engine='bash', count_lines}
-$ conda list
-```
-| package          | version |        |      |
-|------------------|---------|--------|------|
-| mlagents         | 0.16.0  | pypi_0 | pypi |
-| mlagents-envs    | 0.16.0  | pypi_0 | pypi |
-| Communicator API | 1.0.0   |        |      |
-| TensorFlow       | 2.5.0   |        |      |
+    11.1. version in python env:
+    ```{r, engine='bash', count_lines}
+    $ conda list
+    ```
+    | package          | version |        |      |
+    |------------------|---------|--------|------|
+    | mlagents         | 0.16.0  | pypi_0 | pypi |
+    | mlagents-envs    | 0.16.0  | pypi_0 | pypi |
+    | Communicator API | 1.0.0   |        |      |
+    | TensorFlow       | 2.5.0   |        |      |
 
-2. unity env:
-[https://github.com/Unity-Technologies/ml-agents/releases/tag/release_17]([https://github.com/Unity-Technologies/ml-agents/releases/tag/release_17])
+    11.2. version in unity env:
+    [https://github.com/Unity-Technologies/ml-agents/releases/tag/release_17]([https://github.com/Unity-Technologies/ml-agents/releases/tag/release_17])
 
-| package          | version |
-|------------------|---------|
-| mlagents         | 1.0.0-preview  |
-| communication    |1.0.0  | pypi_0 |
+    | package          | version |
+    |------------------|---------|
+    | mlagents         | 1.0.0-preview  |
+    | communication    |1.0.0  | pypi_0 |
 
 -----------------
 
@@ -75,6 +75,6 @@ $ conda list
 [VirtualCapsuleEndoscopy](https://github.com/CapsuleEndoscope/VirtualCapsuleEndoscopy)
 
 14.
-```{r, engine='bash', count_lines}
-mlagents-learn config\trainer_config.yaml --run-id=stable --train --force
-```
+    ```{r, engine='bash', count_lines}
+    mlagents-learn config\trainer_config.yaml --run-id=stable --train --force
+    ```
