@@ -2,6 +2,10 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
+[Unity + ML-Agent Introduction Video:  ](https://www.youtube.com/watch?v=NgxK7SK8qnA)
+
+[![Unity + ML-Agent Introduction](https://img.youtube.com/vi/NgxK7SK8qnA/mqdefault.jpg)](https://www.youtube.com/watch?v=NgxK7SK8qnA)
+
 1. install unity 2019.3.3f1 and unity hub 2.3.2 (note: do not update at all.)
 [download Unity from here](https://jetamooz.com/courses/unity-pro-2019/)
 
