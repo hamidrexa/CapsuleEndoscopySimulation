@@ -2,7 +2,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
-1. install unity 2019.3.3f1 and unity hub 3.3.0
+1. install unity 2019.3.3f1 and unity hub 2.3.2 (note: do not update at all.)
 [download Unity from here](https://jetamooz.com/courses/unity-pro-2019/)
 
 2. add project to unity hub by path (under 260 character)
@@ -74,7 +74,8 @@ Learn more: [How To Make Intellisense Work In VSCode With Unity?](https://www.yo
 13. clone this library:
 [VirtualCapsuleEndoscopy](https://github.com/CapsuleEndoscope/VirtualCapsuleEndoscopy)
 
-14.
+14. Copy the folder "com.unity.ml-agents" from the ml-agent library to root folder of your project
+15.
     ```{r, engine='bash', count_lines}
     mlagents-learn config\trainer_config.yaml --run-id=stable --train --force
     ```
