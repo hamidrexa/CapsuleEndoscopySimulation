@@ -115,7 +115,7 @@ public class magneticActuator : Agent
             EndEpisode();
         } 
         else if( distanceToTarget > 0.1f )
-            AddReward(-distanceToTarget * 0.0001f);
+            AddReward(-distanceToTarget * 0.001f);
             // AddReward(0.00005f/distanceToTarget);
         // else if( distanceToTarget < 0.7f ) {
         //     AddReward(0.001f/distanceToTarget);
@@ -128,9 +128,6 @@ public class magneticActuator : Agent
         // }
 
         RewardFunctionMovingTowards();
-        if( Capsule.transform.parent.name == "GameObject (10)" )
-            Debug.Log(" =>  distance REWARD = " + -distanceToTarget * 0.01f +
-                " ; CumulativeReward= " + GetCumulativeReward());
 
         if( Mathf.Abs(Capsule.transform.localPosition.x) > 0.9f ||
             Mathf.Abs(Capsule.transform.localPosition.z) > 0.9f ) {
@@ -138,6 +135,9 @@ public class magneticActuator : Agent
             EndEpisode();
         }
        
+        if( Capsule.transform.parent.name == "GameObject (10)" )
+            Debug.Log(" =>  distance REWARD = " + -distanceToTarget * 0.001f +
+                " ; CumulativeReward= " + GetCumulativeReward());
         
         // Debug.Log(" =>  Capsule.transform.localPosition.x = " + Capsule.transform.localPosition +
         //     // " ; SolenoidField1.transform.parent.localPosition = " + SolenoidField1.transform.parent.localPosition +
