@@ -1,0 +1,36 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1624789949",
+        "python_version": "3.7.10 (default, Feb 26 2021, 13:06:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\Hamidrexa\\anaconda3\\envs\\RL\\Scripts\\mlagents-learn config\\trainer_config.yaml --run-id=BallJump --train --force",
+        "mlagents_version": "0.16.0",
+        "mlagents_envs_version": "0.16.0",
+        "communication_protocol_version": "1.0.0",
+        "tensorflow_version": "2.5.0",
+        "end_time_seconds": "1624789958"
+    },
+    "total": 9.5407206,
+    "count": 1,
+    "self": 0.19322099999999942,
+    "children": {
+        "run_training.setup": {
+            "total": 0.009600199999999948,
+            "count": 1,
+            "self": 0.009600199999999948
+        },
+        "TrainerController.start_learning": {
+            "total": 9.337899400000001,
+            "count": 1,
+            "self": 0.11579800000000162,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 9.2221014,
+                    "count": 1,
+                    "self": 9.2221014
+                }
+            }
+        }
+    }
+}

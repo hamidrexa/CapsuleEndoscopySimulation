@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1624787396",
+        "python_version": "3.7.10 (default, Feb 26 2021, 13:06:18) [MSC v.1916 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\Hamidrexa\\anaconda3\\envs\\py37\\Scripts\\mlagents-learn --run-id=BallAgent --train --force",
+        "mlagents_version": "0.26.0",
+        "mlagents_envs_version": "0.26.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.7.1+cpu",
+        "numpy_version": "1.21.0",
+        "end_time_seconds": "1624787457"
+    },
+    "total": 60.903194,
+    "count": 1,
+    "self": 0.00247579999999914,
+    "children": {
+        "run_training.setup": {
+            "total": 0.020562800000000103,
+            "count": 1,
+            "self": 0.020562800000000103
+        },
+        "TrainerController.start_learning": {
+            "total": 60.8801554,
+            "count": 1,
+            "self": 9.679999999434585e-05,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 60.880043,
+                    "count": 1,
+                    "self": 60.880043
+                },
+                "TrainerController._save_models": {
+                    "total": 1.5600000004667436e-05,
+                    "count": 1,
+                    "self": 1.5600000004667436e-05
+                }
+            }
+        }
+    }
+}
