@@ -1,8 +1,8 @@
-Library/
-Library/*
-Temp/
-Temp/*
-Logs/
-Logs/*
-Assets/Magnetodynamics/
-Assets/Magnetodynamics/*
+Project/Library/
+Project/Library/*
+Project/Temp/
+Project/Temp/*
+Project/Logs/
+Project/Logs/*
+Project/Assets/Magnetodynamics/
+Project/Assets/Magnetodynamics/*
