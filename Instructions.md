@@ -83,3 +83,6 @@ Learn more: [How To Make Intellisense Work In VSCode With Unity?](https://www.yo
     ```{r, engine='bash', count_lines}
     mlagents-learn config\trainer_config.yaml --run-id=stable --train --force
     ```
+16. for more information about ml-agent config file: 
+[Explanation of the Unity ML Agent configuration file](https://www.youtube.com/watch?v=xFsfQ5qiKvI)
+
