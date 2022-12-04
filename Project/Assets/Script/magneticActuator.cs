@@ -60,7 +60,7 @@ public class magneticActuator : Agent
         sensor.AddObservation(Capsule.transform.localPosition.z);
         // sensor.AddObservation(SolenoidField3.transform.parent.localPosition-Capsule.transform.localPosition);
 
-        sensor.AddObservation(Capsule.transform.localRotation);
+        sensor.AddObservation(Capsule.transform.localRotation); // dim=4 ; Quaternion 
 
         Vector3 m_DirToTarget = target.position - m_CapsuleRb.position; //Capsule.transform.localPosition
         float m_MovingTowardsDot = Vector3.Dot(m_CapsuleRb.velocity, m_DirToTarget.normalized);
@@ -154,14 +154,14 @@ public class magneticActuator : Agent
     {
         Vector3 m_DirToTarget = target.position - m_CapsuleRb.position; //Capsule.transform.localPosition
         float m_MovingTowardsDot = Vector3.Dot(m_CapsuleRb.velocity, m_DirToTarget.normalized);
-        AddReward(0.1f * m_MovingTowardsDot);
+        AddReward(0.5f * m_MovingTowardsDot);
 
         var materials = m_CapsuleMr.materials;
         materials[1] = (m_MovingTowardsDot>0) ? towardMaterial : capsuleMaterial[1];
         m_CapsuleMr.materials = materials;
 
         if( Capsule.transform.parent.name == "GameObject (10)"  )
-            Debug.Log(" =>  Reward Towards = " + 0.03f * m_MovingTowardsDot );
+            Debug.Log(" =>  Reward Towards = " + 0.5f * m_MovingTowardsDot );
         
     }
 
