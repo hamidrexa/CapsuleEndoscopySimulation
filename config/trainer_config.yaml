@@ -15,7 +15,7 @@ default:
     num_layers: 2
     time_horizon: 64
     sequence_length: 64
-    summary_freq: 10000
+    summary_freq: 500
     use_recurrent: false
     vis_encode_type: simple
     reward_signals:
@@ -25,20 +25,21 @@ default:
 
 BallMagnetsTutorial:
     trainer: ppo
-    batch_size: 128
+    batch_size: 2048
     beta: 1.0e-3
-    buffer_size: 5000
+    buffer_size: 10240
     epsilon: 0.15
     hidden_units: 128
     lambd: 0.92
     learning_rate: 3.0e-4
     learning_rate_schedule: linear
-    max_steps: 2.0e6
+    max_steps: 1.0e6
+    memory_size: 128
     normalize: true
     num_epoch: 3
     num_layers: 3
-    time_horizon: 128
-    summary_freq: 50000
+    time_horizon: 32
+    summary_freq: 500
     use_recurrent: false
     reward_signals:
         extrinsic:

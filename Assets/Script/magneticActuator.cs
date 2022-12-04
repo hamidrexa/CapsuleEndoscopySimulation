@@ -15,138 +15,174 @@ public class magneticActuator : Agent
     public GameObject SolenoidField2;
     public GameObject SolenoidField3;
     public GameObject SolenoidField4;
-    private ExternalFieldSolenoidScript Fieldcontroller1;
-    private ExternalFieldSolenoidScript Fieldcontroller2;
-    private ExternalFieldSolenoidScript Fieldcontroller3;
-    private ExternalFieldSolenoidScript Fieldcontroller4;
+    ExternalFieldSolenoidScript Fieldcontroller1;
+    ExternalFieldSolenoidScript Fieldcontroller2;
+    ExternalFieldSolenoidScript Fieldcontroller3;
+    ExternalFieldSolenoidScript Fieldcontroller4;
 
-    [Header("magnetic ball")]
-    public GameObject ball;
-    Rigidbody m_BallRb;
+    [Header("Magnetic Capsule")]
+    public GameObject Capsule;
+    public Material towardMaterial;
+    Material[] capsuleMaterial;
+    Rigidbody m_CapsuleRb;
+    MeshRenderer m_CapsuleMr;
+    // Transform m_CapsuleTr;
 
     EnvironmentParameters m_ResetParams;
+
+    [Header("Target")]
+    public Transform target;
 
     public override void Initialize()
     {
         
         controller = electromagneticFieldController.GetComponent<ElectromagneticFieldControllerScript>();
-        // Debug.Log("MagneticField="+controller.MagneticField(ball.transform.position));
+        // Debug.Log("MagneticField="+controller.MagneticField(Capsule.transform.position));
 
         Fieldcontroller1 = SolenoidField1.GetComponent<ExternalFieldSolenoidScript>();
         Fieldcontroller2 = SolenoidField2.GetComponent<ExternalFieldSolenoidScript>();
         Fieldcontroller3 = SolenoidField3.GetComponent<ExternalFieldSolenoidScript>();
         Fieldcontroller4 = SolenoidField4.GetComponent<ExternalFieldSolenoidScript>();
 
-        m_BallRb = ball.GetComponent<Rigidbody>();
+        m_CapsuleRb = Capsule.GetComponent<Rigidbody>();
+        m_CapsuleMr = Capsule.GetComponent<MeshRenderer>();
+        capsuleMaterial = m_CapsuleMr.materials;
+        // m_CapsuleTr = Capsule.GetComponent<Transform>();
         m_ResetParams = Academy.Instance.EnvironmentParameters;
-        SetResetParameters();
+
+        // m_CapsuleRb.mass = m_ResetParams.GetWithDefault("mass", 1.0f);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // sensor.AddObservation(controller.MagneticField(ball.transform.position));
-        sensor.AddObservation(ball.transform.position.x);
-        sensor.AddObservation(ball.transform.position.z);
-        sensor.AddObservation(m_BallRb.velocity.magnitude);
+        sensor.AddObservation(target.localPosition-Capsule.transform.localPosition);
+        sensor.AddObservation(Capsule.transform.localPosition.x);
+        sensor.AddObservation(Capsule.transform.localPosition.z);
+        // sensor.AddObservation(SolenoidField3.transform.parent.localPosition-Capsule.transform.localPosition);
+
+        sensor.AddObservation(Capsule.transform.localRotation);
+
+        Vector3 m_DirToTarget = target.position - m_CapsuleRb.position; //Capsule.transform.localPosition
+        float m_MovingTowardsDot = Vector3.Dot(m_CapsuleRb.velocity, m_DirToTarget.normalized);
+
+        sensor.AddObservation(m_MovingTowardsDot);
+        sensor.AddObservation(m_CapsuleRb.velocity);
+        // sensor.AddObservation(m_CapsuleRb.angularVelocity);
+
+        sensor.AddObservation(Fieldcontroller1.strength);
+        sensor.AddObservation(Fieldcontroller2.strength);
+        sensor.AddObservation(Fieldcontroller3.strength);
+        sensor.AddObservation(Fieldcontroller4.strength);
     }
 
     public override void OnActionReceived(float[] vectorAction)
     {
-        int alpha = 100;
+        // vectorAction is between -1 & 1
+        // if( distanceToTarget > 0.05f ) {
+            Fieldcontroller1.strength +=  10000f * vectorAction[0]; 
+            Fieldcontroller2.strength +=  10000f * vectorAction[1];
+            Fieldcontroller3.strength +=  10000f * vectorAction[2];
+            Fieldcontroller4.strength +=  10000f * vectorAction[3];
+        // }
+    }
 
-        int SolenoidFieldStrength1 = 0;
-        int SolenoidFieldStrength2 = 0;
-        int SolenoidFieldStrength3 = 0;
-        int SolenoidFieldStrength4 = 0;
+    void FixedUpdate()
+    {
+        float distanceToTarget = Vector3.Distance(Capsule.transform.localPosition, target.localPosition);
 
-        int SolenoidFieldAction1 = Mathf.FloorToInt(vectorAction[0]);
-        int SolenoidFieldAction2 = Mathf.FloorToInt(vectorAction[1]);
-        int SolenoidFieldAction3 = Mathf.FloorToInt(vectorAction[2]);
-        int SolenoidFieldAction4 = Mathf.FloorToInt(vectorAction[3]);
+        if( distanceToTarget < 0.1f ) {
+            if (Mathf.Abs(m_CapsuleRb.velocity.magnitude) > 0.02f)
+                AddReward(0.01f);
+            else {
+                AddReward(3.0f);
+                // Debug.Log(" =>  m_CapsuleRb.velocity.magnitude = " + m_CapsuleRb.velocity.magnitude + 
+                // // " ;  mag = " + new Vector2(Capsule.transform.localPosition.x, Capsule.transform.localPosition.z).magnitude + 
+                // // " ;  z = " + Capsule.transform.localPosition.z +
+                // // " ;  x = " + Capsule.transform.localPosition.x +
+                // " ; Field_S1= " + Fieldcontroller1.strength +
+                // " ; Field_S2= " + Fieldcontroller2.strength + 
+                // " ; Field_S3= " + Fieldcontroller3.strength + 
+                // " ; Field_S4= " + Fieldcontroller4.strength );
+                EndEpisode();
+            }
+            // if( Capsule.transform.parent.name == "GameObject (10)"  )
+            //     Debug.Log(" =>  distanceToTarget = " + distanceToTarget +
+            //         " ; Field_S1= " + Fieldcontroller1.strength +
+            //         " ; Field_S2= " + Fieldcontroller2.strength + 
+            //         " ; Field_S3= " + Fieldcontroller3.strength + 
+            //         " ; Field_S4= " + Fieldcontroller4.strength +
+            //         " ; CumulativeReward= " + GetCumulativeReward());
+            EndEpisode();
+        } 
+        else if( distanceToTarget > 0.1f )
+            AddReward(-distanceToTarget * 0.0001f);
+            // AddReward(0.00005f/distanceToTarget);
+        // else if( distanceToTarget < 0.7f ) {
+        //     AddReward(0.001f/distanceToTarget);
+        //     // if( Capsule.transform.parent.name == "GameObject (10)"  )
+        //     //     Debug.Log(" +  AddReward = " + 0.001f/distanceToTarget );
+        // }
+        // else if( distanceToTarget >= 0.7f ) {
+        //     AddReward(-distanceToTarget/100);
+        //     // Debug.Log(" -  AddReward = " + distanceToTarget/100 );
+        // }
 
-        if (SolenoidFieldAction1 == 0) {  SolenoidFieldStrength1 = -1; }
-        if (SolenoidFieldAction1 == 1) {  SolenoidFieldStrength1 = 1; }
-        if (SolenoidFieldAction1 == 2) {  SolenoidFieldStrength1 = 0; }
+        RewardFunctionMovingTowards();
+        if( Capsule.transform.parent.name == "GameObject (10)" )
+            Debug.Log(" =>  distance REWARD = " + -distanceToTarget * 0.01f +
+                " ; CumulativeReward= " + GetCumulativeReward());
 
-        if (SolenoidFieldAction2 == 0) {  SolenoidFieldStrength2 = -1; }
-        if (SolenoidFieldAction2 == 1) {  SolenoidFieldStrength2 = 1; }
-        if (SolenoidFieldAction2 == 2) {  SolenoidFieldStrength2 = 0; }
-
-        if (SolenoidFieldAction3 == 0) {  SolenoidFieldStrength3 = -1; }
-        if (SolenoidFieldAction3 == 1) {  SolenoidFieldStrength3 = 1; }
-        if (SolenoidFieldAction3 == 2) {  SolenoidFieldStrength3 = 0; }
-
-        if (SolenoidFieldAction4 == 0) {  SolenoidFieldStrength4 = -1; }
-        if (SolenoidFieldAction4 == 1) {  SolenoidFieldStrength4 = 1; }
-        if (SolenoidFieldAction4 == 2) {  SolenoidFieldStrength4 = 0; }
-
-        Fieldcontroller1.strength += alpha * SolenoidFieldStrength1;
-        Fieldcontroller2.strength += alpha * SolenoidFieldStrength2;
-        Fieldcontroller3.strength += alpha * SolenoidFieldStrength3;
-        Fieldcontroller4.strength += alpha * SolenoidFieldStrength4;
-
-        // Debug.Log("Act1="+vectorAction[0] +
-        //         "  ;  Act2="+vectorAction[1] + 
-        //         "  ;  Act3="+vectorAction[2] + 
-        //         "  ;  Act4="+vectorAction[3]);
-
-        if( Mathf.Abs(ball.transform.position.x) > 1f ||
-            Mathf.Abs(ball.transform.position.z) > 1f)
-        {
-            Debug.Log("END  Field_S1="+Fieldcontroller1.strength +
-            " ; Field_S2="+Fieldcontroller2.strength + 
-            " ; Field_S3="+Fieldcontroller3.strength + 
-            " ; Field_S4="+Fieldcontroller4.strength);
-
-            SetReward(-1f);
+        if( Mathf.Abs(Capsule.transform.localPosition.x) > 0.9f ||
+            Mathf.Abs(Capsule.transform.localPosition.z) > 0.9f ) {
+            AddReward(-2.0f);
             EndEpisode();
         }
-        else if( Mathf.Abs(ball.transform.position.x) < 0.2f ||
-                 Mathf.Abs(ball.transform.position.z) < 0.2f)
-        {
-            SetReward(0.5f);
-        }
+       
+        
+        // Debug.Log(" =>  Capsule.transform.localPosition.x = " + Capsule.transform.localPosition +
+        //     // " ; SolenoidField1.transform.parent.localPosition = " + SolenoidField1.transform.parent.localPosition +
+        //     //     " ; m_CapsuleTr.position.x = " + m_CapsuleTr.position.x + 
+        //     //     " ; m_CapsuleTr.localPosition.x = " + m_CapsuleTr.localPosition.x + 
+        //     //     " ; m_CapsuleRb.position.x = " + m_CapsuleRb.position.x + 
+        //         // " ; m_CapsuleRb.localPosition.x = " + m_CapsuleRb.localPosition.x + 
+        //         " ; CumulativeReward= " + GetCumulativeReward());
+
+
+    }
+
+    void RewardFunctionMovingTowards()
+    {
+        Vector3 m_DirToTarget = target.position - m_CapsuleRb.position; //Capsule.transform.localPosition
+        float m_MovingTowardsDot = Vector3.Dot(m_CapsuleRb.velocity, m_DirToTarget.normalized);
+        AddReward(0.1f * m_MovingTowardsDot);
+
+        var materials = m_CapsuleMr.materials;
+        materials[1] = (m_MovingTowardsDot>0) ? towardMaterial : capsuleMaterial[1];
+        m_CapsuleMr.materials = materials;
+
+        if( Capsule.transform.parent.name == "GameObject (10)"  )
+            Debug.Log(" =>  Reward Towards = " + 0.03f * m_MovingTowardsDot );
+        
     }
 
     public override void OnEpisodeBegin()
     {
-        Fieldcontroller1.strength = 10000 + UnityEngine.Random.Range(-1000f, 1000f);
-        Fieldcontroller2.strength = 10000 + UnityEngine.Random.Range(-1000f, 1000f);
-        Fieldcontroller3.strength = 10000 + UnityEngine.Random.Range(-1000f, 1000f);
-        Fieldcontroller4.strength = 10000 + UnityEngine.Random.Range(-1000f, 1000f);
-        Debug.Log("START  Field_S1="+Fieldcontroller1.strength +
-        " ; Field_S2="+Fieldcontroller2.strength + 
-        " ; Field_S3="+Fieldcontroller3.strength + 
-        " ; Field_S4="+Fieldcontroller4.strength);
+        Fieldcontroller1.strength = UnityEngine.Random.Range(-1000f, 1000f);
+        Fieldcontroller2.strength = UnityEngine.Random.Range(-1000f, 1000f) ;
+        Fieldcontroller3.strength = UnityEngine.Random.Range(-1000f, 1000f) ;
+        Fieldcontroller4.strength = UnityEngine.Random.Range(-1000f, 1000f) ;
 
-        ball.transform.localPosition = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0.1f, UnityEngine.Random.Range(-1f, 1f));
-        // Debug.Log("ball.localPosition="+ball.transform.localPosition);
+        Capsule.transform.localPosition = new Vector3(UnityEngine.Random.Range(-0.65f, 0.65f), 0.1f, UnityEngine.Random.Range(-0.65f, 0.65f));
+        Capsule.transform.Rotate(new Vector3(1, 0, 1), UnityEngine.Random.Range(0f, 360f));
 
-        SetResetParameters();
+        target.localPosition = new Vector3(UnityEngine.Random.Range(-0.65f, 0.65f), 0.001f, UnityEngine.Random.Range(-0.65f, 0.65f));
+
+        // m_CapsuleRb.mass = m_ResetParams.GetWithDefault("mass", 1.0f);
+
+        // Debug.Log("  START ======>  rot.x = " + Capsule.transform.localRotation.x + 
+        //         " ;  z = " + Capsule.transform.localPosition.z + 
+        //         " ;  x = " + Capsule.transform.localPosition.x +
+        //         " ;  y = " + Capsule.transform.localPosition.y );
     }
 
-    // public override void Heuristic(float[] actionsOut)
-    // {
-    //     if (Input.GetAxis("Vertical")>0)
-    //         actionsOut[0] = 2;
-    //     else if (Input.GetAxis("Vertical")<=0)
-    //         actionsOut[1] = 2;
-    //     if (Input.GetAxis("Horizontal")>0)
-    //         actionsOut[2] = 2;
-    //     else if (Input.GetAxis("Horizontal")<=0)
-    //         actionsOut[3] = 2;
-    // }
-
-    public void SetBall()
-    {
-        //Set the attributes of the ball by fetching the information from the academy
-        m_BallRb.mass = m_ResetParams.GetWithDefault("mass", 4.0f);
-        // var scale = m_ResetParams.GetWithDefault("scale", 0.2f);
-        // ball.transform.localScale = new Vector3(scale, scale, scale);
-    }
-
-    public void SetResetParameters()
-    {
-        SetBall();
-    }
 }
