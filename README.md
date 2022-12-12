@@ -1,1 +1,1 @@
-docs: [Instructions: ](./docs/Instructions.md)
+docs: [Instructions](./docs/Instructions.md)

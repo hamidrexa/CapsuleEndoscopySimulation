@@ -104,3 +104,5 @@ Migrate on release 17:
     ml-agents-envs: 0.26.0,
     Communicator API: 1.5.0,
     PyTorch: 1.7.1+cu110
+    tensorboard: 2.10.1
+    
