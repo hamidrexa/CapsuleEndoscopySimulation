@@ -1,0 +1,29 @@
+{
+    "BallMagnetsTutorial": {
+        "checkpoints": [
+            {
+                "steps": 104395,
+                "file_path": "results\\2\\BallMagnetsTutorial\\BallMagnetsTutorial-104395.onnx",
+                "reward": -2.5410689097813894,
+                "creation_time": 1670828242.9626758,
+                "auxillary_file_paths": [
+                    "results\\2\\BallMagnetsTutorial\\BallMagnetsTutorial-104395.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 104395,
+            "file_path": "results\\2\\BallMagnetsTutorial.onnx",
+            "reward": -2.5410689097813894,
+            "creation_time": 1670828242.9626758,
+            "auxillary_file_paths": [
+                "results\\2\\BallMagnetsTutorial\\BallMagnetsTutorial-104395.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.26.0",
+        "torch_version": "1.7.1+cu110"
+    }
+}

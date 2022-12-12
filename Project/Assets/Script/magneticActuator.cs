@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using Unity.MLAgents;
+using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 using static System.Math;
 
@@ -75,14 +76,14 @@ public class magneticActuator : Agent
         sensor.AddObservation(Fieldcontroller4.strength);
     }
 
-    public override void OnActionReceived(float[] vectorAction)
+    public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         // vectorAction is between -1 & 1
         // if( distanceToTarget > 0.05f ) {
-            Fieldcontroller1.strength +=  10000f * vectorAction[0]; 
-            Fieldcontroller2.strength +=  10000f * vectorAction[1];
-            Fieldcontroller3.strength +=  10000f * vectorAction[2];
-            Fieldcontroller4.strength +=  10000f * vectorAction[3];
+            Fieldcontroller1.strength +=  10000f * actionBuffers.ContinuousActions[0]; 
+            Fieldcontroller2.strength +=  10000f * actionBuffers.ContinuousActions[1];
+            Fieldcontroller3.strength +=  10000f * actionBuffers.ContinuousActions[2];
+            Fieldcontroller4.strength +=  10000f * actionBuffers.ContinuousActions[3];
         // }
     }
 
@@ -154,14 +155,14 @@ public class magneticActuator : Agent
     {
         Vector3 m_DirToTarget = target.position - m_CapsuleRb.position; //Capsule.transform.localPosition
         float m_MovingTowardsDot = Vector3.Dot(m_CapsuleRb.velocity, m_DirToTarget.normalized);
-        AddReward(0.5f * m_MovingTowardsDot);
+        AddReward(0.1f * m_MovingTowardsDot);
 
         var materials = m_CapsuleMr.materials;
         materials[1] = (m_MovingTowardsDot>0) ? towardMaterial : capsuleMaterial[1];
         m_CapsuleMr.materials = materials;
 
         if( Capsule.transform.parent.name == "GameObject (10)"  )
-            Debug.Log(" =>  Reward Towards = " + 0.5f * m_MovingTowardsDot );
+            Debug.Log(" =>  Reward Towards = " + 0.1f * m_MovingTowardsDot );
         
     }
 
